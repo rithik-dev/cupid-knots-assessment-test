@@ -80,4 +80,41 @@ class UserRepository {
     }
     return null;
   }
+
+  static Future<User?> updateProfile(Map<String, dynamic> data) async {
+    try {
+      final res = await _dio.post(
+        '/updateProfileDetails',
+        options: Options(headers: {
+          'Authorization': 'Bearer ${Globals.accessToken}',
+        }),
+        data: data,
+      );
+
+      if (res.data is Map) {
+        final msg = res.data?['message'];
+        showSnackBar(msg);
+
+        if (res.data.containsKey('success') && !res.data['success']) {
+          return null;
+        }
+
+        if (res.statusCode! >= 200 && res.statusCode! < 300) {
+          return User.fromJson(res.data['data']['user_details']);
+        }
+      }
+    } on DioError catch (e) {
+      final data = e.response?.data;
+      String? msg = data?['message'];
+
+      if (msg == 'Validation Error.') {
+        final errors = [for (final err in data?['data'].values) ...err];
+        if (errors.isNotEmpty) msg = errors.first;
+      }
+
+      showSnackBar(msg ?? 'Something went wrong!');
+      log(_id, error: e.response);
+    }
+    return null;
+  }
 }

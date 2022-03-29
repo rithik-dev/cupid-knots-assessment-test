@@ -1,6 +1,8 @@
 import 'package:cupid_knot_assessment_test/widgets/my_text_field.dart';
 import 'package:flutter/material.dart';
 
+export 'package:cupid_knot_assessment_test/widgets/my_text_field.dart';
+
 class InputField extends StatelessWidget {
   static const id = 'InputField';
 

@@ -4,7 +4,6 @@ import 'package:cupid_knot_assessment_test/screens/login_screen.dart';
 import 'package:cupid_knot_assessment_test/utils/helpers.dart';
 import 'package:cupid_knot_assessment_test/widgets/input_field.dart';
 import 'package:cupid_knot_assessment_test/widgets/loading_overlay.dart';
-import 'package:cupid_knot_assessment_test/widgets/my_text_field.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatelessWidget {
