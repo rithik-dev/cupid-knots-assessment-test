@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class Globals {
   const Globals._();
 
-  // static String? idToken;
+  static String? accessToken;
+
   // static String? fcmToken;
   // static String? deviceId;
 

@@ -1,14 +1,15 @@
 import 'dart:developer' as devtools show log;
 
-import 'package:flutter/material.dart';
 import 'package:cupid_knot_assessment_test/utils/globals.dart';
+import 'package:flutter/material.dart';
 
 void showSnackBar(
-  String text, {
+  String? text, {
   Duration duration = const Duration(seconds: 2),
 }) {
+  if (isNullOrBlank(text)) return;
   Globals.scaffoldMessengerKey.currentState?.showSnackBar(
-    SnackBar(content: Text(text), duration: duration),
+    SnackBar(content: Text(text!), duration: duration),
   );
 }
 
