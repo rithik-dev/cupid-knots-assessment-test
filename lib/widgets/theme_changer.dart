@@ -3,22 +3,27 @@ import 'package:cupid_knot_assessment_test/utils/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ThemeListTile extends StatelessWidget {
-  static const id = 'ThemeListTile';
+class ThemeChanger extends StatelessWidget {
+  static const id = 'ThemeChanger';
 
-  const ThemeListTile({
+  const ThemeChanger({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: const SizedBox(
-        height: double.infinity,
-        child: Icon(Icons.brush),
+    return InkWell(
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Text(
+            'Change Theme',
+            style: Theme.of(
+              context,
+            ).textTheme.bodyText2?.copyWith(fontSize: 16),
+          ),
+        ),
       ),
-      title: const Text('Theme'),
-      subtitle: Text(ThemeController.of(context).currentThemeName),
       onTap: () => _showChangeThemeDialog(context),
     );
   }

@@ -35,6 +35,7 @@ class RegisterScreen extends StatelessWidget {
               children: [
                 InputField(
                   title: 'Full Name',
+                  autofocus: true,
                   inputType: MyTextInputType.sentences,
                   onChanged: (v) => _data['full_name'] = v,
                   validator: (v) {

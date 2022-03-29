@@ -34,6 +34,7 @@ class LoginScreen extends StatelessWidget {
               children: [
                 InputField(
                   title: 'Email',
+                  autofocus: true,
                   inputType: MyTextInputType.email,
                   onChanged: (v) => _data['email'] = v,
                   validator: (v) {

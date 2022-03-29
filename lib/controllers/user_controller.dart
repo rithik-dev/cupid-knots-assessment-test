@@ -54,7 +54,7 @@ class UserController extends ChangeNotifier {
   //   }
   // }
 
-  Future<void> logout() async {
+  void logout() {
     Globals.accessToken = null;
     clear();
   }
