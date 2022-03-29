@@ -35,7 +35,14 @@ class UserRepository {
         }
       }
     } on DioError catch (e) {
-      final msg = e.response?.data['message'];
+      final data = e.response?.data;
+      String? msg = data?['message'];
+
+      if (msg == 'Validation Error.') {
+        final errors = [for (final err in data?['data'].values) ...err];
+        if (errors.isNotEmpty) msg = errors.first;
+      }
+
       showSnackBar(msg ?? 'Something went wrong!');
       log(_id, error: e.response);
     }
@@ -60,7 +67,14 @@ class UserRepository {
         }
       }
     } on DioError catch (e) {
-      final msg = e.response?.data['message'];
+      final data = e.response?.data;
+      String? msg = data?['message'];
+
+      if (msg == 'Validation Error.') {
+        final errors = [for (final err in data?['data'].values) ...err];
+        if (errors.isNotEmpty) msg = errors.first;
+      }
+
       showSnackBar(msg ?? 'Something went wrong!');
       log(_id, error: e.response);
     }
