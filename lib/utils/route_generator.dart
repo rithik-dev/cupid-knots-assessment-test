@@ -1,7 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:cupid_knot_assessment_test/screens/home_screen.dart';
+import 'package:cupid_knot_assessment_test/screens/login_screen.dart';
+import 'package:cupid_knot_assessment_test/screens/register_screen.dart';
 import 'package:cupid_knot_assessment_test/screens/splash_screen.dart';
 import 'package:cupid_knot_assessment_test/utils/helpers.dart';
+import 'package:flutter/material.dart';
 
 class RouteGenerator {
   static const _id = 'RouteGenerator';
@@ -12,6 +14,10 @@ class RouteGenerator {
     switch (settings.name) {
       case SplashScreen.id:
         return _route(const SplashScreen());
+      case LoginScreen.id:
+        return _route(LoginScreen());
+      case RegisterScreen.id:
+        return _route(RegisterScreen());
       case HomeScreen.id:
         return _route(const HomeScreen());
       default:

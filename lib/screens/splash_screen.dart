@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:cupid_knot_assessment_test/screens/home_screen.dart';
+import 'package:cupid_knot_assessment_test/screens/login_screen.dart';
 import 'package:cupid_knot_assessment_test/widgets/custom_loader.dart';
+import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
   static const id = 'SplashScreen';
@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     (() async {
       await Future.delayed(const Duration(seconds: 1));
-      Navigator.pushReplacementNamed(context, HomeScreen.id);
+      Navigator.pushReplacementNamed(context, LoginScreen.id);
     })();
     super.initState();
   }
