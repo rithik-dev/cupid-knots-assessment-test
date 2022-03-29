@@ -1,12 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:cupid_knot_assessment_test/controllers/loading_controller.dart';
 import 'package:cupid_knot_assessment_test/controllers/theme_controller.dart';
+import 'package:cupid_knot_assessment_test/controllers/user_controller.dart';
 import 'package:cupid_knot_assessment_test/screens/splash_screen.dart';
 import 'package:cupid_knot_assessment_test/services/local_storage.dart';
 import 'package:cupid_knot_assessment_test/utils/app_theme.dart';
 import 'package:cupid_knot_assessment_test/utils/globals.dart';
 import 'package:cupid_knot_assessment_test/utils/route_generator.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -36,6 +38,12 @@ class _MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<LoadingController>(
+          create: (_) => LoadingController(),
+        ),
+        ChangeNotifierProvider<UserController>(
+          create: (_) => UserController(),
+        ),
         ChangeNotifierProvider<ThemeController>(
           create: (_) => ThemeController(),
         ),
