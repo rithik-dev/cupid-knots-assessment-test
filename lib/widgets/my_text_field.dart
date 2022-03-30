@@ -13,7 +13,7 @@ enum MyTextInputType {
   multiline,
 }
 
-class MyTextField extends StatelessWidget {
+class MyTextField extends StatefulWidget {
   final String? labelText;
   final void Function(String?)? onChanged;
   final void Function(String?)? onFieldSubmitted;
@@ -74,59 +74,86 @@ class MyTextField extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<MyTextField> createState() => _MyTextFieldState();
+}
+
+class _MyTextFieldState extends State<MyTextField> {
+  late bool _obscureText;
+
+  @override
+  void initState() {
+    _obscureText = widget.obscureText;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return EasyContainer(
-      width: width,
+      width: widget.width,
       elevation: 0,
       padding: 0,
-      height: height,
-      borderRadius: borderRadius,
-      customMargin: margin ?? EdgeInsets.zero,
+      height: widget.height,
+      borderRadius: widget.borderRadius,
+      customMargin: widget.margin ?? EdgeInsets.zero,
       alignment: null,
       child: TextFormField(
-        focusNode: focusNode,
-        obscureText: obscureText,
-        maxLength: maxLength,
-        onFieldSubmitted: onFieldSubmitted,
-        controller: controller,
-        validator: validator,
-        style: textStyle,
-        initialValue: defaultValue,
-        maxLines: maxLines,
-        onTap: onTap,
+        focusNode: widget.focusNode,
+        obscureText: _obscureText,
+        maxLength: widget.maxLength,
+        onFieldSubmitted: widget.onFieldSubmitted,
+        controller: widget.controller,
+        validator: widget.validator,
+        style: widget.textStyle,
+        initialValue: widget.defaultValue,
+        maxLines: widget.maxLines,
+        onTap: widget.onTap,
         textAlignVertical: TextAlignVertical.center,
-        autofocus: autofocus,
+        autofocus: widget.autofocus,
         keyboardType: _inputTypeData['textInputType'],
         inputFormatters: _inputTypeData['textInputFormatters'],
         textCapitalization: _inputTypeData['textCapitalization'],
-        onChanged: onChanged,
-        readOnly: readOnly,
+        onChanged: widget.onChanged,
+        readOnly: widget.readOnly,
         decoration: InputDecoration(
           hintText: 'Enter Value',
-          hintStyle: hintTextStyle ??
+          hintStyle: widget.hintTextStyle ??
               const TextStyle(
                 color: Color(0xFF7C7272),
                 fontWeight: FontWeight.w500,
                 fontSize: 14,
               ),
-          contentPadding: contentPadding,
+          contentPadding: widget.contentPadding,
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(borderRadius),
+            borderRadius: BorderRadius.circular(widget.borderRadius),
           ),
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.transparent, width: 1),
-            borderRadius: BorderRadius.circular(borderRadius),
+            borderRadius: BorderRadius.circular(widget.borderRadius),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.transparent, width: 2),
-            borderRadius: BorderRadius.circular(borderRadius),
+            borderRadius: BorderRadius.circular(widget.borderRadius),
           ),
         ).copyWith(
-          hintText: overrideHintText ? hintText : 'Enter $labelText',
-          prefixIcon: leading,
-          suffixIcon: trailing,
+          hintText: widget.overrideHintText
+              ? widget.hintText
+              : 'Enter ${widget.labelText}',
+          prefixIcon: widget.leading,
+          suffixIcon: widget.trailing ??
+              (widget.obscureText ? _buildToggleObscureTextWidget() : null),
         ),
       ),
+    );
+  }
+
+  Widget _buildToggleObscureTextWidget() {
+    return IconButton(
+      onPressed: () => setState(
+        () => _obscureText = !_obscureText,
+      ),
+      icon: _obscureText
+          ? Icon(Icons.visibility_off, size: 25.0)
+          : Icon(Icons.visibility, size: 25.0),
     );
   }
 
@@ -135,7 +162,7 @@ class MyTextField extends StatelessWidget {
     late final TextInputType textInputType;
     late final TextCapitalization textCapitalization;
 
-    switch (inputType) {
+    switch (widget.inputType) {
       case MyTextInputType.multiline:
         textInputType = TextInputType.multiline;
         textCapitalization = TextCapitalization.sentences;
