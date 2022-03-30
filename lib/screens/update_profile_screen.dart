@@ -1,5 +1,6 @@
 import 'package:cupid_knot_assessment_test/controllers/user_controller.dart';
 import 'package:cupid_knot_assessment_test/utils/helpers.dart';
+import 'package:cupid_knot_assessment_test/widgets/date_of_birth_getter.dart';
 import 'package:cupid_knot_assessment_test/widgets/input_field.dart';
 import 'package:cupid_knot_assessment_test/widgets/loading_overlay.dart';
 import 'package:flutter/material.dart';
@@ -69,16 +70,9 @@ class UpdateProfileScreen extends StatelessWidget {
                         return null;
                       },
                     ),
-                    InputField(
-                      title: 'Date of Birth',
+                    DateOfBirthGetter(
                       defaultValue: userCon.user?.dateOfBirth,
-                      onChanged: (v) => _data['dob'] = v,
-                      validator: (v) {
-                        if (isNullOrBlank(v)) {
-                          return 'Date of birth cannot be empty!';
-                        }
-                        return null;
-                      },
+                      onUpdate: (v) => _data['dob'] = v,
                     ),
                   ],
                 ),
@@ -97,7 +91,7 @@ class UpdateProfileScreen extends StatelessWidget {
                     _data['full_name'] ??= userCon.user?.fullName;
                     _data['mobile_no'] ??= userCon.user?.mobileNumber;
                     _data['gender'] ??= userCon.user?.gender;
-                    _data['dob'] ??= userCon.user?.dateOfBirth;
+                    _data['dob'] ??= userCon.user?.dateOfBirthFormatted;
 
                     final user = await UserController.of(
                       context,

@@ -75,6 +75,8 @@ class InputField extends StatelessWidget {
                 maxLines: maxLines,
                 onChanged: onChanged,
                 validator: validator,
+                hintText: hintText,
+                overrideHintText: hintText != null,
                 defaultValue: defaultValue,
                 height: height,
                 autofocus: autofocus,

@@ -2,7 +2,6 @@ import 'package:cupid_knot_assessment_test/controllers/contacts_controller.dart'
 import 'package:cupid_knot_assessment_test/controllers/loading_controller.dart';
 import 'package:cupid_knot_assessment_test/controllers/theme_controller.dart';
 import 'package:cupid_knot_assessment_test/controllers/user_controller.dart';
-import 'package:cupid_knot_assessment_test/models/contact.dart';
 import 'package:cupid_knot_assessment_test/screens/splash_screen.dart';
 import 'package:cupid_knot_assessment_test/services/local_storage.dart';
 import 'package:cupid_knot_assessment_test/utils/app_theme.dart';
@@ -72,7 +71,6 @@ class _MainApp extends StatelessWidget {
           }
 
           PaginatedItemsBuilder.config = PaginatedItemsBuilderConfig(
-            mockItemGetter: _mockItemsGetter,
             shimmerConfig: ShimmerConfig(
               baseColor: Theme.of(context).cardColor,
               highlightColor: shimmerHighlightColor,
@@ -90,19 +88,6 @@ class _MainApp extends StatelessWidget {
         initialRoute: SplashScreen.id,
       ),
     );
-  }
-
-  static dynamic _mockItemsGetter<T>([String? key]) {
-    final typeKey = key ?? T.toString();
-    switch (typeKey) {
-      case 'Contact':
-        return Contact.fromJson({
-          'id': 0,
-          'full_name': '■■■■■■■■',
-          'contact_number': '■■■■■■■■',
-          'email': '■■■■■■■■',
-        });
-    }
   }
 }
 

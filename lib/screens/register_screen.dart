@@ -2,6 +2,7 @@ import 'package:cupid_knot_assessment_test/controllers/user_controller.dart';
 import 'package:cupid_knot_assessment_test/screens/home_screen.dart';
 import 'package:cupid_knot_assessment_test/screens/login_screen.dart';
 import 'package:cupid_knot_assessment_test/utils/helpers.dart';
+import 'package:cupid_knot_assessment_test/widgets/date_of_birth_getter.dart';
 import 'package:cupid_knot_assessment_test/widgets/input_field.dart';
 import 'package:cupid_knot_assessment_test/widgets/loading_overlay.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,7 @@ class RegisterScreen extends StatelessWidget {
           body: Form(
             key: _formKey,
             child: ListView(
-              cacheExtent: 500,
+              cacheExtent: 1000,
               padding: const EdgeInsets.all(15).copyWith(top: 25, bottom: 75),
               children: [
                 InputField(
@@ -102,16 +103,7 @@ class RegisterScreen extends StatelessWidget {
                     return null;
                   },
                 ),
-                InputField(
-                  title: 'Date of Birth',
-                  onChanged: (v) => _data['dob'] = v,
-                  validator: (v) {
-                    if (isNullOrBlank(v)) {
-                      return 'Date of birth cannot be empty!';
-                    }
-                    return null;
-                  },
-                ),
+                DateOfBirthGetter(onUpdate: (v) => _data['dob'] = v),
                 const SizedBox(height: 10),
                 TextButton(
                   onPressed: () => Navigator.pushReplacementNamed(

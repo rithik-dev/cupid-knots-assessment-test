@@ -39,7 +39,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 _buildInfo(
                   title: 'Date of Birth',
-                  value: userCon.user?.dateOfBirth,
+                  value: userCon.user?.dateOfBirthText,
                 ),
                 ListTile(
                   title: const Text('Logout'),

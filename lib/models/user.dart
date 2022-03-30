@@ -1,11 +1,17 @@
+import 'package:cupid_knot_assessment_test/utils/helpers.dart';
+
 class User {
   late final int id;
   late final String fullName;
   late final String email;
   late final String mobileNumber;
   late final String gender;
-  late final String dateOfBirth;
+  late final DateTime dateOfBirth;
   late final String accessToken;
+
+  String get dateOfBirthText => getDisplayDate(dateOfBirth);
+
+  String get dateOfBirthFormatted => getFormattedDate(dateOfBirth);
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -13,7 +19,7 @@ class User {
     email = json['email'];
     mobileNumber = json['mobile_no'];
     gender = json['gender'];
-    dateOfBirth = json['dob'];
+    dateOfBirth = DateTime.parse(json['dob']);
     accessToken = json['token'];
   }
 
@@ -24,7 +30,7 @@ class User {
     _json['email'] = email;
     _json['mobile_no'] = mobileNumber;
     _json['gender'] = gender;
-    _json['dob'] = dateOfBirth;
+    _json['dob'] = dateOfBirthFormatted;
     _json['token'] = accessToken;
     return _json;
   }
