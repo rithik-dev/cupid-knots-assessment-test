@@ -58,6 +58,7 @@ class ProfileScreen extends StatelessWidget {
             ),
             floatingActionButton: FloatingActionButton(
               child: const Icon(Icons.edit),
+              heroTag: ProfileScreen.id,
               onPressed: () => Navigator.pushNamed(
                 context,
                 UpdateProfileScreen.id,

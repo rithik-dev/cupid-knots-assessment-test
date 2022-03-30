@@ -51,6 +51,7 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.example.cupid_knot_assessment_test"
+        multiDexEnabled true
         targetSdkVersion flutter.targetSdkVersion
         minSdkVersion flutterMinSdkVersion.toInteger()
         versionCode flutterVersionCode.toInteger()

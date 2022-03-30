@@ -101,7 +101,7 @@ class AppTheme {
     onAccentColor: Colors.white,
     scaffoldBackgroundColor: const Color(0xFFDCDFE2),
   ).copyWith(
-    cardColor: const Color(0xFFFFFFFF),
+    cardColor: const Color(0xFFCACFD6),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: Color(0xFFFAFAFA),
     ),
