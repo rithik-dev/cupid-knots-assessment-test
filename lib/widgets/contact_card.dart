@@ -18,28 +18,30 @@ class ContactCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(contact.fullName),
-      subtitle: Text('${contact.contactNumber} | ${contact.email}'),
-      trailing: IconButton(
-        icon: const Icon(Icons.delete),
-        onPressed: () async {
-          startLoading(context, HomeScreen.id);
-          final success = await ContactsController.of(
-            context,
-            listen: false,
-          ).deleteContact(
-            userId: UserController.of(
+    return Card(
+      child: ListTile(
+        title: Text(contact.fullName),
+        subtitle: Text('${contact.contactNumber} | ${contact.email}'),
+        trailing: IconButton(
+          icon: const Icon(Icons.delete),
+          onPressed: () async {
+            startLoading(context, HomeScreen.id);
+            final success = await ContactsController.of(
               context,
               listen: false,
-            ).user!.id.toString(),
-            data: contact.toJson(),
-          );
-          stopLoading(context);
-          showSnackBar(success
-              ? 'Contact deleted successfully!'
-              : 'Something went wrong!');
-        },
+            ).deleteContact(
+              userId: UserController.of(
+                context,
+                listen: false,
+              ).user!.id.toString(),
+              data: contact.toJson(),
+            );
+            stopLoading(context);
+            showSnackBar(success
+                ? 'Contact deleted successfully!'
+                : 'Something went wrong!');
+          },
+        ),
       ),
     );
   }

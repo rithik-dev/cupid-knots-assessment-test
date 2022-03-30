@@ -31,6 +31,7 @@ class UserRepository {
 
         if (res.statusCode! >= 200 && res.statusCode! < 300) {
           Globals.accessToken = res.data['data']['token'];
+          res.data['data']['user_details']['token'] = Globals.accessToken;
           return User.fromJson(res.data['data']['user_details']);
         }
       }
@@ -63,6 +64,7 @@ class UserRepository {
 
         if (res.statusCode! >= 200 && res.statusCode! < 300) {
           Globals.accessToken = res.data['data']['token'];
+          res.data['data']['user_details']['token'] = Globals.accessToken;
           return User.fromJson(res.data['data']['user_details']);
         }
       }
@@ -100,6 +102,7 @@ class UserRepository {
         }
 
         if (res.statusCode! >= 200 && res.statusCode! < 300) {
+          res.data['data']['user_details']['token'] = Globals.accessToken;
           return User.fromJson(res.data['data']['user_details']);
         }
       }

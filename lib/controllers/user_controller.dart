@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:cupid_knot_assessment_test/models/user.dart';
 import 'package:cupid_knot_assessment_test/repositories/user_repository.dart';
+import 'package:cupid_knot_assessment_test/services/local_storage.dart';
 import 'package:cupid_knot_assessment_test/utils/globals.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -11,27 +14,38 @@ class UserController extends ChangeNotifier {
   }) =>
       Provider.of<UserController>(context, listen: listen);
 
+  static const _sharedPrefsKey = 'user';
+
   User? _user;
 
   User? get user => _user;
 
   bool get isLoggedIn => _user != null;
 
-  Future<User?> _updateUser([User? newUser]) async {
+  User? _updateUser(
+    User? newUser, {
+    bool updateLocalStorage = true,
+  }) {
     if (newUser == null) return null;
     _user = newUser;
+
+    // save to local storage
+    if (updateLocalStorage) {
+      LocalStorage.write(_sharedPrefsKey, jsonEncode(_user!.toJson()));
+    }
+
     notifyListeners();
     return _user;
   }
 
   Future<User?> updateProfile(Map<String, dynamic> data) async {
     final _profile = await UserRepository.updateProfile(data);
-    return await _updateUser(_profile);
+    return _updateUser(_profile);
   }
 
   Future<User?> register(Map<String, dynamic> data) async {
     final _registeredUser = await UserRepository.registerUser(data);
-    return await _updateUser(_registeredUser);
+    return _updateUser(_registeredUser);
   }
 
   Future<User?> login({
@@ -42,25 +56,27 @@ class UserController extends ChangeNotifier {
       email: email,
       password: password,
     );
-    return await _updateUser(_loggedInUser);
+    return _updateUser(_loggedInUser);
   }
 
-  // Future<User?> initializeUser() async {
-  //   if (Globals.accessToken == null) {
-  //     return null;
-  //   } else {
-  //     final _currentUser = await UserRepository.getUserProfile();
-  //     if (_currentUser == null) {
-  //       Globals.accessToken = null;
-  //       return null;
-  //     } else {
-  //       return await _updateUser(_currentUser);
-  //     }
-  //   }
-  // }
+  Future<User?> initializeUser() async {
+    // sample delay
+    await Future.delayed(const Duration(seconds: 1));
+
+    final userFromLocalStorage = LocalStorage.read(_sharedPrefsKey);
+    if (userFromLocalStorage != null) {
+      try {
+        final user = User.fromJson(jsonDecode(userFromLocalStorage));
+        Globals.accessToken = user.accessToken;
+        return _updateUser(user, updateLocalStorage: false);
+      } catch (_) {}
+    }
+    return null;
+  }
 
   void logout() {
     Globals.accessToken = null;
+    LocalStorage.remove(_sharedPrefsKey);
     clear();
   }
 

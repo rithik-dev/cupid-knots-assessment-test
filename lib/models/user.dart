@@ -5,6 +5,7 @@ class User {
   late final String mobileNumber;
   late final String gender;
   late final String dateOfBirth;
+  late final String accessToken;
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -13,6 +14,7 @@ class User {
     mobileNumber = json['mobile_no'];
     gender = json['gender'];
     dateOfBirth = json['dob'];
+    accessToken = json['token'];
   }
 
   Map<String, dynamic> toJson() {
@@ -23,6 +25,7 @@ class User {
     _json['mobile_no'] = mobileNumber;
     _json['gender'] = gender;
     _json['dob'] = dateOfBirth;
+    _json['token'] = accessToken;
     return _json;
   }
 }

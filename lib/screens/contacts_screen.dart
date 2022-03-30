@@ -17,8 +17,6 @@ class ContactsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userId = UserController.of(context).user!.id.toString();
-
     return SafeArea(
       child: LoadingOverlay(
         screenId: ContactsScreen.id,
@@ -28,7 +26,10 @@ class ContactsScreen extends StatelessWidget {
               return PaginatedItemsBuilder<Contact>(
                 emptyText: 'No contacts found!',
                 fetchPageData: (reset) => contactsCon.updateContacts(
-                  userId: userId,
+                  userId: UserController.of(
+                    context,
+                    listen: false,
+                  ).user!.id.toString(),
                   reset: reset,
                   showLoaderOnReset: reset,
                 ),

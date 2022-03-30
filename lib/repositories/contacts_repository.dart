@@ -13,9 +13,9 @@ class ContactsRepository {
     required Map<String, dynamic> data,
   }) async {
     try {
-      await _usersCollection.doc(userId).update({
+      await _usersCollection.doc(userId).set({
         'contacts': FieldValue.arrayUnion([data]),
-      });
+      }, SetOptions(merge: true));
       return true;
     } catch (_) {
       return false;
@@ -26,6 +26,14 @@ class ContactsRepository {
     String userId,
   ) async {
     final userDoc = await _usersCollection.doc(userId).get();
+
+    if (!userDoc.exists) {
+      return PaginatedItemsResponse(
+        listItems: [],
+        idGetter: (contact) => contact.id,
+      );
+    }
+
     final data = userDoc.data();
 
     final contacts = List.generate(data!['contacts'].length, (index) {

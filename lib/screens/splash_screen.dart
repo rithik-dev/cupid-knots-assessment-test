@@ -1,3 +1,5 @@
+import 'package:cupid_knot_assessment_test/controllers/user_controller.dart';
+import 'package:cupid_knot_assessment_test/screens/home_screen.dart';
 import 'package:cupid_knot_assessment_test/screens/login_screen.dart';
 import 'package:cupid_knot_assessment_test/widgets/custom_loader.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +19,15 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     (() async {
-      await Future.delayed(const Duration(seconds: 1));
-      Navigator.pushReplacementNamed(context, LoginScreen.id);
+      final user = await UserController.of(
+        context,
+        listen: false,
+      ).initializeUser();
+
+      Navigator.pushReplacementNamed(
+        context,
+        user == null ? LoginScreen.id : HomeScreen.id,
+      );
     })();
     super.initState();
   }
