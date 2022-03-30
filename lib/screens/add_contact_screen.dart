@@ -85,10 +85,11 @@ class AddContactScreen extends StatelessWidget {
                 );
                 stopLoading(context);
 
-                if (success) Navigator.pop(context);
                 showSnackBar(success
                     ? 'Contact added successfully!'
                     : 'Something went wrong!');
+
+                if (success) Navigator.pop(context);
               }
             },
           ),

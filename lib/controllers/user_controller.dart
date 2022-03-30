@@ -61,7 +61,7 @@ class UserController extends ChangeNotifier {
 
   Future<User?> initializeUser() async {
     // sample delay
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(milliseconds: 500));
 
     final userFromLocalStorage = LocalStorage.read(_sharedPrefsKey);
     if (userFromLocalStorage != null) {

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cupid_knot_assessment_test/models/contact.dart';
 import 'package:cupid_knot_assessment_test/utils/globals.dart';
+import 'package:cupid_knot_assessment_test/utils/helpers.dart';
 import 'package:paginated_items_builder/paginated_items_builder.dart';
 
 class ContactsRepository {
@@ -25,27 +26,35 @@ class ContactsRepository {
   static Future<PaginatedItemsResponse<Contact>?> getContacts(
     String userId,
   ) async {
-    final userDoc = await _usersCollection.doc(userId).get();
+    try {
+      final userDoc = await _usersCollection.doc(userId).get();
 
-    if (!userDoc.exists) {
+      if (!userDoc.exists) {
+        return PaginatedItemsResponse(
+          listItems: [],
+          idGetter: (contact) => contact.id,
+        );
+      }
+
+      final data = userDoc.data();
+
+      final contacts = List.generate(data!['contacts'].length, (index) {
+        final json = data['contacts'][index];
+        json['id'] = index;
+        return Contact.fromJson(json);
+      });
+
+      return PaginatedItemsResponse<Contact>(
+        listItems: contacts,
+        idGetter: (contact) => contact.id,
+      );
+    } catch (_) {
+      showSnackBar('Something went wrong!');
       return PaginatedItemsResponse(
         listItems: [],
         idGetter: (contact) => contact.id,
       );
     }
-
-    final data = userDoc.data();
-
-    final contacts = List.generate(data!['contacts'].length, (index) {
-      final json = data['contacts'][index];
-      json['id'] = index;
-      return Contact.fromJson(json);
-    });
-
-    return PaginatedItemsResponse<Contact>(
-      listItems: contacts,
-      idGetter: (contact) => contact.id,
-    );
   }
 
   static Future<bool> deleteContact({

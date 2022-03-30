@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cupid_knot_assessment_test/models/contact.dart';
 import 'package:cupid_knot_assessment_test/repositories/contacts_repository.dart';
+import 'package:cupid_knot_assessment_test/utils/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:paginated_items_builder/paginated_items_builder.dart';
 import 'package:provider/provider.dart';
@@ -22,18 +23,22 @@ class ContactsController extends ChangeNotifier {
     bool reset = false,
     bool showLoaderOnReset = false,
   }) async {
-    if (reset && showLoaderOnReset) {
-      _contactsResponse = null;
-      notifyListeners();
-    }
+    try {
+      if (reset && showLoaderOnReset) {
+        _contactsResponse = null;
+        notifyListeners();
+      }
 
-    final res = await ContactsRepository.getContacts(userId);
-    if (reset || _contactsResponse == null) {
-      _contactsResponse = res;
-    } else {
-      _contactsResponse!.update(res);
+      final res = await ContactsRepository.getContacts(userId);
+      if (reset || _contactsResponse == null) {
+        _contactsResponse = res;
+      } else {
+        _contactsResponse!.update(res);
+      }
+      notifyListeners();
+    } catch (_) {
+      showSnackBar('Something went wrong!');
     }
-    notifyListeners();
   }
 
   Future<bool> createContact({

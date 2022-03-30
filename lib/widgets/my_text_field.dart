@@ -152,8 +152,8 @@ class _MyTextFieldState extends State<MyTextField> {
         () => _obscureText = !_obscureText,
       ),
       icon: _obscureText
-          ? Icon(Icons.visibility_off, size: 25.0)
-          : Icon(Icons.visibility, size: 25.0),
+          ? const Icon(Icons.visibility_off, size: 25.0)
+          : const Icon(Icons.visibility, size: 25.0),
     );
   }
 

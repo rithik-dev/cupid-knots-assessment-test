@@ -46,6 +46,8 @@ class UserRepository {
 
       showSnackBar(msg ?? 'Something went wrong!');
       log(_id, error: e.response);
+    } catch (_) {
+      showSnackBar('Something went wrong!');
     }
     return null;
   }
@@ -79,6 +81,8 @@ class UserRepository {
 
       showSnackBar(msg ?? 'Something went wrong!');
       log(_id, error: e.response);
+    } catch (_) {
+      showSnackBar('Something went wrong!');
     }
     return null;
   }
@@ -117,6 +121,8 @@ class UserRepository {
 
       showSnackBar(msg ?? 'Something went wrong!');
       log(_id, error: e.response);
+    } catch (_) {
+      showSnackBar('Something went wrong!');
     }
     return null;
   }
