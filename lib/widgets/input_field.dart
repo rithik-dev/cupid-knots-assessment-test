@@ -45,17 +45,23 @@ class InputField extends StatelessWidget {
     this.inputType = MyTextInputType.sentences,
   }) : super(key: key);
 
+  static Widget buildTitle(
+    BuildContext context, {
+    required String title,
+  }) {
+    return Text(
+      title,
+      style: Theme.of(context).textTheme.headline6,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        if (title != null)
-          Text(
-            title!,
-            style: Theme.of(context).textTheme.headline6,
-          ),
+        if (title != null) buildTitle(context, title: title!),
         Row(
           children: [
             if (icon != null) ...[

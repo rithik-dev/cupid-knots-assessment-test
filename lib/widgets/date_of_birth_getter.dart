@@ -6,11 +6,11 @@ class DateOfBirthGetter extends StatefulWidget {
   static const id = 'DateOfBirthGetter';
 
   final DateTime? defaultValue;
-  final void Function(String formattedDate)? onUpdate;
+  final void Function(String formattedDate)? onChange;
 
   const DateOfBirthGetter({
     Key? key,
-    this.onUpdate,
+    this.onChange,
     this.defaultValue,
   }) : super(key: key);
 
@@ -56,7 +56,7 @@ class _DateOfBirthGetterState extends State<DateOfBirthGetter> {
         if (date != null) {
           _selectedDateTime = date;
           _controller.text = getDisplayDate(date);
-          widget.onUpdate?.call(getFormattedDate(date));
+          widget.onChange?.call(getFormattedDate(date));
         }
       },
       validator: (v) {

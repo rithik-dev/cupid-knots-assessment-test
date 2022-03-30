@@ -40,24 +40,24 @@ class ContactsController extends ChangeNotifier {
     required String userId,
     required Map<String, dynamic> data,
   }) async {
-    final res = await ContactsRepository.createContact(
+    final success = await ContactsRepository.createContact(
       userId: userId,
       data: data,
     );
-    if (res) await updateContacts(userId: userId, reset: true);
-    return res;
+    await updateContacts(userId: userId, reset: true);
+    return success;
   }
 
   Future<bool> deleteContact({
     required String userId,
     required Map<String, dynamic> data,
   }) async {
-    final res = await ContactsRepository.deleteContact(
+    final success = await ContactsRepository.deleteContact(
       userId: userId,
       data: data,
     );
     await updateContacts(userId: userId, reset: true);
-    return res;
+    return success;
   }
 
   void clear() {
