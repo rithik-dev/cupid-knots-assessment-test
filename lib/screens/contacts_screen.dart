@@ -1,4 +1,12 @@
+import 'package:cupid_knot_assessment_test/controllers/contacts_controller.dart';
+import 'package:cupid_knot_assessment_test/controllers/user_controller.dart';
+import 'package:cupid_knot_assessment_test/models/contact.dart';
+import 'package:cupid_knot_assessment_test/screens/add_contact_screen.dart';
+import 'package:cupid_knot_assessment_test/widgets/contact_card.dart';
+import 'package:cupid_knot_assessment_test/widgets/loading_overlay.dart';
 import 'package:flutter/material.dart';
+import 'package:paginated_items_builder/paginated_items_builder.dart';
+import 'package:provider/provider.dart';
 
 class ContactsScreen extends StatelessWidget {
   static const id = 'ContactsScreen';
@@ -9,12 +17,33 @@ class ContactsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userId = UserController.of(context).user!.id.toString();
+
     return SafeArea(
-      child: Scaffold(
-        body: Center(
-          child: Text(
-            'ContactsScreen',
-            style: Theme.of(context).textTheme.headline3,
+      child: LoadingOverlay(
+        screenId: ContactsScreen.id,
+        child: Scaffold(
+          body: Consumer<ContactsController>(
+            builder: (context, contactsCon, _) {
+              return PaginatedItemsBuilder<Contact>(
+                emptyText: 'No contacts found!',
+                fetchPageData: (reset) => contactsCon.updateContacts(
+                  userId: userId,
+                  reset: reset,
+                  showLoaderOnReset: reset,
+                ),
+                response: contactsCon.contactsResponse,
+                itemBuilder: (context, _, contact) => ContactCard(contact),
+              );
+            },
+          ),
+          floatingActionButton: FloatingActionButton(
+            child: const Icon(Icons.add),
+            heroTag: ContactsScreen.id,
+            onPressed: () => Navigator.pushNamed(
+              context,
+              AddContactScreen.id,
+            ),
           ),
         ),
       ),

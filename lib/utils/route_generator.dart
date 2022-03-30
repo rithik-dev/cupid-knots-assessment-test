@@ -1,3 +1,4 @@
+import 'package:cupid_knot_assessment_test/screens/add_contact_screen.dart';
 import 'package:cupid_knot_assessment_test/screens/home_screen.dart';
 import 'package:cupid_knot_assessment_test/screens/login_screen.dart';
 import 'package:cupid_knot_assessment_test/screens/register_screen.dart';
@@ -21,6 +22,8 @@ class RouteGenerator {
         return _route(RegisterScreen());
       case UpdateProfileScreen.id:
         return _route(UpdateProfileScreen());
+      case AddContactScreen.id:
+        return _route(AddContactScreen());
       case HomeScreen.id:
         return _route(const HomeScreen());
       default:
