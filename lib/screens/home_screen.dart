@@ -33,31 +33,28 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: LoadingOverlay(
-        screenId: HomeScreen.id,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(_bottomNavItems[_selectedIndex].label!),
-            actions: const [ThemeChanger()],
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(_bottomNavItems[_selectedIndex].label!),
+          actions: const [ThemeChanger()],
+        ),
+        body: DoubleBackToCloseApp(
+          snackBar: const SnackBar(
+            content: Text('Tap the back button again to exit the app!'),
           ),
-          body: DoubleBackToCloseApp(
-            snackBar: const SnackBar(
-              content: Text('Tap the back button again to exit the app!'),
-            ),
-            child: IndexedStack(
-              index: _selectedIndex,
-              children: const [
-                ProfileScreen(),
-                ContactsScreen(),
-              ],
-            ),
+          child: IndexedStack(
+            index: _selectedIndex,
+            children: const [
+              ProfileScreen(),
+              ContactsScreen(),
+            ],
           ),
-          bottomNavigationBar: SizedBox(
-            child: BottomNavigationBar(
-              currentIndex: _selectedIndex,
-              onTap: (index) => setState(() => _selectedIndex = index),
-              items: _bottomNavItems,
-            ),
+        ),
+        bottomNavigationBar: SizedBox(
+          child: BottomNavigationBar(
+            currentIndex: _selectedIndex,
+            onTap: (index) => setState(() => _selectedIndex = index),
+            items: _bottomNavItems,
           ),
         ),
       ),
